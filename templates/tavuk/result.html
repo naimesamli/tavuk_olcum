@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tavuk Ağırlık Ölçümü Sonuçları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:rgb(251, 204, 255);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column; 
+            overflow: auto;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            background-color: rgb(196, 100, 209);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: rgb(196, 100, 209);
+            color: white;
+        }
+
+        td {
+            background-color:rgb(196, 100, 209);
+        }
+
+        tr:nth-child(even) td {
+            background-color:rgb(196, 100, 209);
+        }
+
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgb(196, 100, 209);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color:rgb(196, 100, 209);
+        }
+
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            font-size: 16px;
+            background-color:rgb(196, 100, 209);
+            border-top: 2px solid #ddd;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .summary div {
+            font-weight: bold;
+        }
+        .center-align {
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    
+    <table border="1">
+        <thead>
+            <td>
+                <th colspan="3" class="summary" text-align: center>Tavuk Ağırlık Ölçümü Sonuçları</th>
+            </td>
+            <tr>
+                <th>Gün Sayısı</th>
+                <td colspan="2">{{gun}}</td>
+            </tr>
+            <tr>
+                <th>Toplam Ağırlık</th>
+                <td colspan="2">{{ toplam_agirlik }} gram</td>
+            </tr>
+            <tr>
+                <th>Toplam Tavuk Sayısı</th>
+                <td colspan="2">{{ toplam_tavuk_sayisi }}</td>
+            </tr>
+            <tr>
+                <th>Genel Ortalama Ağırlık</th>
+                <td colspan="2">{{ genel_ortalama|floatformat:2 }} gram</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Gün</th>
+                <th>Ölçülen Ağırlıklar (gram)</th>
+                <th>Günlük Ortalama Ağırlık</th>
+            </tr>
+            {% for gun in gunluk_agirliklar %}
+    <tr>
+        <td>{{ gun.gun }}</td>
+        <td>
+            <ul style="margin: 0; padding-left: 20px;">
+                {% for agirlik in gun.agirliklar %}
+                    <li>{{ agirlik }} gram</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>{{ gun.gunluk_ortalama|floatformat:2 }} gram</td>
+    </tr>
+{% endfor %}
+
+        </tbody>
+    </table>
+    <div class="center-align">
+        <a href="{% url 'tavuk_olcum_view' %}">Yeni ölçüm yap</a>
+    </div>
+</body>
+</html>
